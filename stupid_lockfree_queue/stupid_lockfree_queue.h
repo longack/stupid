@@ -11,44 +11,36 @@ namespace stupid
 	class stupid_lockfree_queue
 	{
 	public:
-		int enqueue(const T& data)
+		int enqueue(const T& data) 
 		{
-			stupid_queue_node<T>* temp = new stupid_queue_node<T>(data);
+			stupid_queue_node<T>* temp_node = new stupid_queue_node<T>(data);
 
-			tail->next = temp;
-			tail = tail->next;
+			if (std::atomic_compare_exchange_weak(&size, 0, 1))
+			{
+				tail = head = temp_node;
+				return 0;
+			}
 
-			++size;
+			size.fetch_add(1, std::memory_order_relaxed);
 			return 0;
 		}
 
 		int dequeue(T& data)
 		{
-			if (!size) return -1;
-
-			stupid_queue_node<T>* temp = dummy.next;
-
-			data = temp->data;
-			dummy.next = temp->next;
-
-			if (1 == size) tail = &dummy;
-
-			delete temp;
-			--size;
 			return 0;
 		}
 
 		stupid_lockfree_queue() 
-		{ 
-			tail = &dummy; 
+		{
+			tail = head = nullptr;
 			size = 0;
 		}
 
 	private:
 		stupid_queue_node<T>* tail;
-		stupid_queue_node<T> dummy;
+		stupid_queue_node<T>* head;
 
-		unsigned int size;
+		std::atomic_int size;
 	};
 }
 
