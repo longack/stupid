@@ -40,6 +40,8 @@ namespace stupid
 		stupid_queue_node<T>* tail;
 		stupid_queue_node<T>* head;
 
+
+
 		std::atomic_int size;
 	};
 }
