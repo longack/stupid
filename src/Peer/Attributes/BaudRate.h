@@ -1,5 +1,5 @@
-#ifndef COM_DEFINES_H_
-#define COM_DEFINES_H_
+#ifndef BAUDRATE_H_
+#define BAUDRATE_H_
 
 namespace stupid
 {
@@ -25,20 +25,6 @@ namespace stupid
 		BaudRate_115200, 
 		BaudRate_230400,
 	};
-
-	enum CharacterSizeMask
-	{
-		CharacterSizeMask_5bit, 
-		CharacterSizeMask_6bit, 
-		CharacterSizeMask_7bit, 
-		CharacterSizeMask_8bit,
-	};
-
-	enum StopBit
-	{
-		Stop_1bit,
-		Stop_2bit,
-	};
 }
 
-#endif // COM_DEFINES_H_ 
+#endif 	// BAUDRATE_H_
