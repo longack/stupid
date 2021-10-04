@@ -1,0 +1,3 @@
+[submodule "stupidb"]
+	path = stupidb
+	url = git@github.com:codea-ppp/stupidb.git
